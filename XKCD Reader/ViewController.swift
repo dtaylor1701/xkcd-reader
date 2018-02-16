@@ -12,6 +12,22 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let urlString = URL(string: "https://xkcd.com/info.0.json")
+        if let url = urlString {
+            let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+                if error != nil {
+                    print(error)
+                } else {
+                    if let usableData = data {
+                        print(usableData) //JSONSerialization
+                    }
+                }
+            }
+            task.resume()
+        }
+    
+        
         // Do any additional setup after loading the view, typically from a nib.
     }
 
