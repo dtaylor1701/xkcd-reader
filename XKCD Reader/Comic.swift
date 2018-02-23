@@ -9,7 +9,18 @@
 import Foundation
 
 struct Comic: Codable {
-    let month: Int
     let num: Int
     let title: String
+    let img: String
+    let alt: String
+    
+    init(num: Int, title: String, img: String, alt: String) {
+        self.num = num;
+        self.title = title;
+        self.img = img;
+        self.alt = alt;
+    }
+    
 }
+
+
