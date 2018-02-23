@@ -15,6 +15,7 @@
 		742445002036713B00D32803 /* XKCD_ReaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742444FF2036713B00D32803 /* XKCD_ReaderTests.swift */; };
 		7424450B2036713B00D32803 /* XKCD_ReaderUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7424450A2036713B00D32803 /* XKCD_ReaderUITests.swift */; };
 		742445192036752000D32803 /* Comic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742445182036752000D32803 /* Comic.swift */; };
+		74AC5FC6203FC063004FD134 /* NetworkHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74AC5FC5203FC063004FD134 /* NetworkHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		7424450A2036713B00D32803 /* XKCD_ReaderUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XKCD_ReaderUITests.swift; sourceTree = "<group>"; };
 		7424450C2036713B00D32803 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		742445182036752000D32803 /* Comic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comic.swift; sourceTree = "<group>"; };
+		74AC5FC5203FC063004FD134 /* NetworkHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +108,7 @@
 				742444F32036713B00D32803 /* LaunchScreen.storyboard */,
 				742444F62036713B00D32803 /* Info.plist */,
 				742445182036752000D32803 /* Comic.swift */,
+				74AC5FC5203FC063004FD134 /* NetworkHelper.swift */,
 			);
 			path = "XKCD Reader";
 			sourceTree = "<group>";
@@ -262,6 +265,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				74AC5FC6203FC063004FD134 /* NetworkHelper.swift in Sources */,
 				742444ED2036713B00D32803 /* ViewController.swift in Sources */,
 				742445192036752000D32803 /* Comic.swift in Sources */,
 				742444EB2036713B00D32803 /* AppDelegate.swift in Sources */,

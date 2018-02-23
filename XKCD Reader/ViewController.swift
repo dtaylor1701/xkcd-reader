@@ -10,76 +10,71 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    let defaultSession = URLSession(configuration: .default)
-    var dataTask: URLSessionDataTask?
+    @IBOutlet weak var comicImage: UIImageView!
+    @IBOutlet weak var nextButton: UIButton!
+    @IBOutlet weak var previousButton: UIButton!
+    
+    @IBAction func nextPressed(_ sender: Any) {
+        if(currentNum > 0){
+            currentNum -= 1
+            NetworkHelper.get(urlSting: Comic.URLString(num: currentNum), completionBlock: handleComicData)
+        }
+    }
+    @IBAction func previousPressed(_ sender: Any) {
+        if(currentNum < maxNum){
+            currentNum += 1
+            NetworkHelper.get(urlSting: Comic.URLString(num: currentNum), completionBlock: handleComicData)
+        }
+    }
+    @IBAction func longPressed(_ sender: UILongPressGestureRecognizer) {
+        if sender.state == UIGestureRecognizerState.began
+        {
+            let alertController = UIAlertController(title: nil, message:
+                currentComic?.alt, preferredStyle: UIAlertControllerStyle.alert)
+            alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default,handler: nil))
+            
+            self.present(alertController, animated: true, completion: nil)
+        }
+    }
+    
+    var currentComic: Comic?
+    var maxNum = 0;
+    var currentNum = 0;
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        makeGetCall(urlSting: "https://xkcd.com/info.0.json")
-        
-        // Do any additional setup after loading the view, typically from a nib.
+        NetworkHelper.get(urlSting: Comic.DefaultURL, completionBlock: handleFirst)
     }
     
-    func makeGetCall(urlSting: String) {
-        // Set up the URL request
-        let todoEndpoint: String = urlSting;
-        guard let url = URL(string: todoEndpoint) else {
-            print("Error: cannot create URL")
-            return
+    func handleFirst(data:Data){
+        handleComicData(data: data)
+        if let comic = currentComic {
+            maxNum = comic.num
+            currentNum = comic.num
         }
-        let urlRequest = URLRequest(url: url)
-        
-        // set up the session
-        let config = URLSessionConfiguration.default
-        let session = URLSession(configuration: config)
-        
-        // make the request
-        let task = session.dataTask(with: urlRequest) {
-            (data, response, error) in
-            // check for any errors
-            guard error == nil else {
-                print("error calling GET")
-                print(error!)
-                return
-            }
-            // make sure we got data
-            guard let responseData = data else {
-                print("Error: did not receive data")
-                return
-            }
-            // parse the result as JSON, since that's what the API provides
-            do {
-                guard let todo = try JSONSerialization.jsonObject(with: responseData, options: [])
-                    as? [String: Any] else {
-                        print("error trying to convert data to JSON")
-                        return
-                }
-                // now we have the todo
-                // let's just print it to prove we can access it
-                print("Comic: " + todo.description)
-                
-                // the todo object is a dictionary
-                // so we just access the title using the "title" key
-                // so check for a title and print it if we have one
-                guard let todoTitle = todo["title"] as? String else {
-                    print("Could not get comic title from JSON")
-                    return
-                }
-                print("The title is: " + todoTitle)
-            } catch  {
-                print("error trying to convert data to JSON")
-                return
-            }
-        }
-        task.resume()
     }
-
+    
+    func handleComicData(data: Data){
+        currentComic = Comic.ComicFromJSON(data: data)
+        if let loadedComic = currentComic {
+            getComicImage(comic: loadedComic)
+        }
+    }
+    
+    func getComicImage(comic: Comic){
+        NetworkHelper.get(urlSting: comic.img, completionBlock: { (data) in
+            guard let image = UIImage(data: data) else {
+                return;
+            }
+            DispatchQueue.main.async {
+                self.comicImage.image = image;
+            }
+        })
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-
 }
 

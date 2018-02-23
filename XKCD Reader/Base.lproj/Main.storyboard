@@ -17,12 +17,57 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView multipleTouchEnabled="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="diR-ym-RKq">
+                                <rect key="frame" x="0.0" y="20" width="375" height="577"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="3OD-ID-8uA" appends="YES" id="b1N-FK-MHc"/>
+                                </connections>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6xr-4G-XYl">
+                                <rect key="frame" x="327" y="617" width="32" height="30"/>
+                                <state key="normal" title="Next"/>
+                                <connections>
+                                    <action selector="nextPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ifF-Ch-1m0"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WTZ-2Q-T4v">
+                                <rect key="frame" x="16" y="617" width="59" height="30"/>
+                                <state key="normal" title="Previous"/>
+                                <connections>
+                                    <action selector="previousPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6qP-MC-33V"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstItem="diR-ym-RKq" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="1oB-xz-T8L"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="WTZ-2Q-T4v" secondAttribute="bottom" constant="20" id="9W3-zU-Dl9"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="diR-ym-RKq" secondAttribute="trailing" id="EmA-ct-KWf"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="diR-ym-RKq" secondAttribute="bottom" constant="70" id="Gn3-f6-0av"/>
+                            <constraint firstItem="WTZ-2Q-T4v" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="TpQ-df-SuN"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="6xr-4G-XYl" secondAttribute="trailing" constant="16" id="XLf-yW-BTt"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="6xr-4G-XYl" secondAttribute="bottom" constant="20" id="bpm-TD-0CB"/>
+                            <constraint firstItem="diR-ym-RKq" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="iCC-1w-NJN"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <connections>
+                        <outlet property="comicImage" destination="diR-ym-RKq" id="hyx-0k-S9Q"/>
+                        <outlet property="nextButton" destination="6xr-4G-XYl" id="DEn-5B-dkK"/>
+                        <outlet property="previousButton" destination="WTZ-2Q-T4v" id="q2y-cz-CrW"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="3OD-ID-8uA">
+                    <connections>
+                        <action selector="longPressed:" destination="BYZ-38-t0r" id="mru-d6-51h"/>
+                    </connections>
+                </pongPressGestureRecognizer>
             </objects>
+            <point key="canvasLocation" x="136.80000000000001" y="133.5832083958021"/>
         </scene>
     </scenes>
 </document>
