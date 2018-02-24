@@ -19,6 +19,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var numLabel: UILabel!
     @IBOutlet weak var infoButton: UIButton!
     @IBOutlet weak var infoBackground: UIImageView!
+    @IBOutlet weak var closeInfoButton: UIButton!
     
     @IBAction func infoPressed(_ sender: Any) {
         infoView.isHidden = false
@@ -79,6 +80,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         numLabel.text = "0"
         infoView.isHidden = true
         infoBackground.image = StyleKit.imageOfInfoBackground
+        closeInfoButton.setImage(StyleKit.imageOfCloseInfoButton, for: .normal)
             
         NetworkHelper.get(urlSting: Comic.DefaultURL, completionBlock: handleFirst)
     }
@@ -96,7 +98,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         if let loadedComic = currentComic {
             DispatchQueue.main.async {
                 self.titleLabel.text = loadedComic.title
-                self.numLabel.text = "\(loadedComic.num)"
+                self.numLabel.text = "xkcd number \(loadedComic.num)"
             }
             getComicImage(comic: loadedComic)
         }
