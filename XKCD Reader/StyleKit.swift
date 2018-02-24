@@ -22,6 +22,10 @@ public class StyleKit : NSObject {
         static var nextButtonTargets: [AnyObject]?
         static var imageOfPreviousButton: UIImage?
         static var previousButtonTargets: [AnyObject]?
+        static var imageOfInfoButton: UIImage?
+        static var infoButtonTargets: [AnyObject]?
+        static var imageOfInfoBackground: UIImage?
+        static var infoBackgroundTargets: [AnyObject]?
     }
 
     //// Drawing Methods
@@ -232,6 +236,97 @@ public class StyleKit : NSObject {
 
     }
 
+    @objc dynamic public class func drawInfoButton(frame targetFrame: CGRect = CGRect(x: 0, y: 0, width: 50, height: 50), resizing: ResizingBehavior = .aspectFit) {
+        //// General Declarations
+        let context = UIGraphicsGetCurrentContext()!
+        
+        //// Resize to Target Frame
+        context.saveGState()
+        let resizedFrame: CGRect = resizing.apply(rect: CGRect(x: 0, y: 0, width: 50, height: 50), target: targetFrame)
+        context.translateBy(x: resizedFrame.minX, y: resizedFrame.minY)
+        context.scaleBy(x: resizedFrame.width / 50, y: resizedFrame.height / 50)
+        let resizedShadowScale: CGFloat = min(resizedFrame.width / 50, resizedFrame.height / 50)
+
+
+        //// Color Declarations
+        let color2 = UIColor(red: 0.557, green: 0.557, blue: 0.557, alpha: 0.502)
+
+        //// Shadow Declarations
+        let shadow = NSShadow()
+        shadow.shadowColor = UIColor.lightGray.withAlphaComponent(0.6)
+        shadow.shadowOffset = CGSize(width: 3, height: 3)
+        shadow.shadowBlurRadius = 5
+
+        //// Group
+        context.saveGState()
+        context.setShadow(offset: CGSize(width: shadow.shadowOffset.width * resizedShadowScale, height: shadow.shadowOffset.height * resizedShadowScale), blur: shadow.shadowBlurRadius * resizedShadowScale, color: (shadow.shadowColor as! UIColor).cgColor)
+        context.beginTransparencyLayer(auxiliaryInfo: nil)
+
+
+        //// Oval Drawing
+        let ovalPath = UIBezierPath(ovalIn: CGRect(x: 5, y: 5, width: 40, height: 40))
+        color2.setFill()
+        ovalPath.fill()
+
+
+        //// Text Drawing
+        let textRect = CGRect(x: 19, y: 15, width: 13, height: 19)
+        let textTextContent = "i"
+        let textStyle = NSMutableParagraphStyle()
+        textStyle.alignment = .center
+        let textFontAttributes = [
+            .font: UIFont.systemFont(ofSize: 24),
+            .foregroundColor: UIColor.black,
+            .paragraphStyle: textStyle,
+        ] as [NSAttributedStringKey: Any]
+
+        let textTextHeight: CGFloat = textTextContent.boundingRect(with: CGSize(width: textRect.width, height: CGFloat.infinity), options: .usesLineFragmentOrigin, attributes: textFontAttributes, context: nil).height
+        context.saveGState()
+        context.clip(to: textRect)
+        textTextContent.draw(in: CGRect(x: textRect.minX, y: textRect.minY + (textRect.height - textTextHeight) / 2, width: textRect.width, height: textTextHeight), withAttributes: textFontAttributes)
+        context.restoreGState()
+
+
+        context.endTransparencyLayer()
+        context.restoreGState()
+        
+        context.restoreGState()
+
+    }
+
+    @objc dynamic public class func drawInfoBackground(frame targetFrame: CGRect = CGRect(x: 0, y: 0, width: 210, height: 130), resizing: ResizingBehavior = .aspectFit) {
+        //// General Declarations
+        let context = UIGraphicsGetCurrentContext()!
+        
+        //// Resize to Target Frame
+        context.saveGState()
+        let resizedFrame: CGRect = resizing.apply(rect: CGRect(x: 0, y: 0, width: 210, height: 130), target: targetFrame)
+        context.translateBy(x: resizedFrame.minX, y: resizedFrame.minY)
+        context.scaleBy(x: resizedFrame.width / 210, y: resizedFrame.height / 130)
+        let resizedShadowScale: CGFloat = min(resizedFrame.width / 210, resizedFrame.height / 130)
+
+
+        //// Color Declarations
+        let color2 = UIColor(red: 0.557, green: 0.557, blue: 0.557, alpha: 0.502)
+
+        //// Shadow Declarations
+        let shadow = NSShadow()
+        shadow.shadowColor = UIColor.lightGray.withAlphaComponent(0.6)
+        shadow.shadowOffset = CGSize(width: 3, height: 3)
+        shadow.shadowBlurRadius = 5
+
+        //// Rectangle Drawing
+        let rectanglePath = UIBezierPath(roundedRect: CGRect(x: 5, y: 5, width: 200, height: 120), cornerRadius: 5)
+        context.saveGState()
+        context.setShadow(offset: CGSize(width: shadow.shadowOffset.width * resizedShadowScale, height: shadow.shadowOffset.height * resizedShadowScale), blur: shadow.shadowBlurRadius * resizedShadowScale, color: (shadow.shadowColor as! UIColor).cgColor)
+        color2.setFill()
+        rectanglePath.fill()
+        context.restoreGState()
+        
+        context.restoreGState()
+
+    }
+
     //// Generated Images
 
     @objc dynamic public class var imageOfNextButton: UIImage {
@@ -272,6 +367,34 @@ public class StyleKit : NSObject {
         return imageOfLoading
     }
 
+    @objc dynamic public class var imageOfInfoButton: UIImage {
+        if Cache.imageOfInfoButton != nil {
+            return Cache.imageOfInfoButton!
+        }
+
+        UIGraphicsBeginImageContextWithOptions(CGSize(width: 50, height: 50), false, 0)
+            StyleKit.drawInfoButton()
+
+        Cache.imageOfInfoButton = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+
+        return Cache.imageOfInfoButton!
+    }
+
+    @objc dynamic public class var imageOfInfoBackground: UIImage {
+        if Cache.imageOfInfoBackground != nil {
+            return Cache.imageOfInfoBackground!
+        }
+
+        UIGraphicsBeginImageContextWithOptions(CGSize(width: 210, height: 130), false, 0)
+            StyleKit.drawInfoBackground()
+
+        Cache.imageOfInfoBackground = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+
+        return Cache.imageOfInfoBackground!
+    }
+
     //// Customization Infrastructure
 
     @objc @IBOutlet dynamic var nextButtonTargets: [AnyObject]! {
@@ -290,6 +413,26 @@ public class StyleKit : NSObject {
             Cache.previousButtonTargets = newValue
             for target: AnyObject in newValue {
                 let _ = target.perform(NSSelectorFromString("setImage:"), with: StyleKit.imageOfPreviousButton)
+            }
+        }
+    }
+
+    @objc @IBOutlet dynamic var infoButtonTargets: [AnyObject]! {
+        get { return Cache.infoButtonTargets }
+        set {
+            Cache.infoButtonTargets = newValue
+            for target: AnyObject in newValue {
+                let _ = target.perform(NSSelectorFromString("setImage:"), with: StyleKit.imageOfInfoButton)
+            }
+        }
+    }
+
+    @objc @IBOutlet dynamic var infoBackgroundTargets: [AnyObject]! {
+        get { return Cache.infoBackgroundTargets }
+        set {
+            Cache.infoBackgroundTargets = newValue
+            for target: AnyObject in newValue {
+                let _ = target.perform(NSSelectorFromString("setImage:"), with: StyleKit.imageOfInfoBackground)
             }
         }
     }

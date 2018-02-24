@@ -15,6 +15,20 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var nextButton: UIButton!
     @IBOutlet weak var previousButton: UIButton!
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var infoView: UIView!
+    @IBOutlet weak var numLabel: UILabel!
+    @IBOutlet weak var infoButton: UIButton!
+    @IBOutlet weak var infoBackground: UIImageView!
+    
+    @IBAction func infoPressed(_ sender: Any) {
+        infoView.isHidden = false
+        infoButton.isHidden = true
+        
+    }
+    @IBAction func closeButtonPressed(_ sender: Any) {
+        infoView.isHidden = true
+        infoButton.isHidden = false
+    }
     
     @IBAction func nextPressed(_ sender: Any) {
         if(currentNum > 0){
@@ -49,8 +63,8 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     }
     
     var currentComic: Comic?
-    var maxNum = 0;
-    var currentNum = 0;
+    var maxNum = 0
+    var currentNum = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,9 +73,13 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         scrollView.maximumZoomScale = 5.0
         nextButton.setImage(StyleKit.imageOfNextButton, for: .normal)
         previousButton.setImage(StyleKit.imageOfPreviousButton, for: .normal)
+        infoButton.setImage(StyleKit.imageOfInfoButton, for: .normal)
         previousButton.isHidden = true;
         titleLabel.text = "XKCD"
-        
+        numLabel.text = "0"
+        infoView.isHidden = true
+        infoBackground.image = StyleKit.imageOfInfoBackground
+            
         NetworkHelper.get(urlSting: Comic.DefaultURL, completionBlock: handleFirst)
     }
     
@@ -78,6 +96,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         if let loadedComic = currentComic {
             DispatchQueue.main.async {
                 self.titleLabel.text = loadedComic.title
+                self.numLabel.text = "\(loadedComic.num)"
             }
             getComicImage(comic: loadedComic)
         }
