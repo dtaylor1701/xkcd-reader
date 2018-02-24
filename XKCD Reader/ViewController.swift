@@ -8,22 +8,33 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UIScrollViewDelegate {
 
+    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var comicImage: UIImageView!
     @IBOutlet weak var nextButton: UIButton!
     @IBOutlet weak var previousButton: UIButton!
+    @IBOutlet weak var titleLabel: UILabel!
     
     @IBAction func nextPressed(_ sender: Any) {
         if(currentNum > 0){
             currentNum -= 1
+            
             NetworkHelper.get(urlSting: Comic.URLString(num: currentNum), completionBlock: handleComicData)
+            if(currentNum == 1){
+                nextButton.isHidden = true
+            } else if (currentNum < maxNum){
+                previousButton.isHidden = false
+            }
         }
     }
     @IBAction func previousPressed(_ sender: Any) {
         if(currentNum < maxNum){
             currentNum += 1
             NetworkHelper.get(urlSting: Comic.URLString(num: currentNum), completionBlock: handleComicData)
+            if currentNum == maxNum {
+                previousButton.isHidden = true
+            }
         }
     }
     @IBAction func longPressed(_ sender: UILongPressGestureRecognizer) {
@@ -43,6 +54,14 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        scrollView.minimumZoomScale = 1.0
+        scrollView.maximumZoomScale = 5.0
+        nextButton.setImage(StyleKit.imageOfNextButton, for: .normal)
+        previousButton.setImage(StyleKit.imageOfPreviousButton, for: .normal)
+        previousButton.isHidden = true;
+        titleLabel.text = "XKCD"
+        
         NetworkHelper.get(urlSting: Comic.DefaultURL, completionBlock: handleFirst)
     }
     
@@ -57,6 +76,9 @@ class ViewController: UIViewController {
     func handleComicData(data: Data){
         currentComic = Comic.ComicFromJSON(data: data)
         if let loadedComic = currentComic {
+            DispatchQueue.main.async {
+                self.titleLabel.text = loadedComic.title
+            }
             getComicImage(comic: loadedComic)
         }
     }
@@ -64,10 +86,10 @@ class ViewController: UIViewController {
     func getComicImage(comic: Comic){
         NetworkHelper.get(urlSting: comic.img, completionBlock: { (data) in
             guard let image = UIImage(data: data) else {
-                return;
+                return
             }
             DispatchQueue.main.async {
-                self.comicImage.image = image;
+                self.comicImage.image = image
             }
         })
     }
@@ -75,6 +97,10 @@ class ViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        return self.comicImage
     }
 }
 

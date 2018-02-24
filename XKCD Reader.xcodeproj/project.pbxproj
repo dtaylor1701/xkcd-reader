@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		74233FBE20411DF80086C4CB /* StyleKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74233FBD20411DF80086C4CB /* StyleKit.swift */; };
 		742444EB2036713B00D32803 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742444EA2036713B00D32803 /* AppDelegate.swift */; };
 		742444ED2036713B00D32803 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742444EC2036713B00D32803 /* ViewController.swift */; };
 		742444F02036713B00D32803 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 742444EE2036713B00D32803 /* Main.storyboard */; };
@@ -36,6 +37,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		74233FBD20411DF80086C4CB /* StyleKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyleKit.swift; sourceTree = "<group>"; };
 		742444E72036713B00D32803 /* XKCD Reader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "XKCD Reader.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		742444EA2036713B00D32803 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		742444EC2036713B00D32803 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -101,6 +103,7 @@
 		742444E92036713B00D32803 /* XKCD Reader */ = {
 			isa = PBXGroup;
 			children = (
+				74233FBD20411DF80086C4CB /* StyleKit.swift */,
 				742444EA2036713B00D32803 /* AppDelegate.swift */,
 				742444EC2036713B00D32803 /* ViewController.swift */,
 				742444EE2036713B00D32803 /* Main.storyboard */,
@@ -268,6 +271,7 @@
 				74AC5FC6203FC063004FD134 /* NetworkHelper.swift in Sources */,
 				742444ED2036713B00D32803 /* ViewController.swift in Sources */,
 				742445192036752000D32803 /* Comic.swift in Sources */,
+				74233FBE20411DF80086C4CB /* StyleKit.swift in Sources */,
 				742444EB2036713B00D32803 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

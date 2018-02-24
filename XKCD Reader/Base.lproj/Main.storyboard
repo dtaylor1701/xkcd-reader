@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -18,23 +19,45 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView multipleTouchEnabled="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="diR-ym-RKq">
-                                <rect key="frame" x="0.0" y="20" width="375" height="577"/>
-                                <gestureRecognizers/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ILs-Yc-nD6">
+                                <rect key="frame" x="-20" y="0.0" width="415" height="667"/>
+                                <subviews>
+                                    <imageView multipleTouchEnabled="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="diR-ym-RKq">
+                                        <rect key="frame" x="20" y="20" width="375" height="627"/>
+                                        <gestureRecognizers/>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="3OD-ID-8uA" appends="YES" id="b1N-FK-MHc"/>
+                                        </connections>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="apG-0y-XAx">
+                                        <rect key="frame" x="176.5" y="28" width="61.5" height="31.5"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="diR-ym-RKq" secondAttribute="bottom" constant="20" id="223-Al-HXa"/>
+                                    <constraint firstItem="apG-0y-XAx" firstAttribute="top" secondItem="ILs-Yc-nD6" secondAttribute="top" constant="28" id="4AQ-uU-nVG"/>
+                                    <constraint firstItem="diR-ym-RKq" firstAttribute="leading" secondItem="ILs-Yc-nD6" secondAttribute="leading" constant="20" id="BTY-Kx-yaD"/>
+                                    <constraint firstItem="diR-ym-RKq" firstAttribute="centerY" secondItem="ILs-Yc-nD6" secondAttribute="centerY" id="ddv-zG-bIb"/>
+                                    <constraint firstItem="apG-0y-XAx" firstAttribute="centerX" secondItem="ILs-Yc-nD6" secondAttribute="centerX" id="oyW-ya-R88"/>
+                                    <constraint firstItem="diR-ym-RKq" firstAttribute="top" secondItem="ILs-Yc-nD6" secondAttribute="top" constant="20" id="pVv-JF-YtX"/>
+                                    <constraint firstItem="diR-ym-RKq" firstAttribute="centerX" secondItem="ILs-Yc-nD6" secondAttribute="centerX" id="q4B-ap-94j"/>
+                                    <constraint firstAttribute="trailing" secondItem="diR-ym-RKq" secondAttribute="trailing" constant="20" id="unc-q1-fuG"/>
+                                </constraints>
                                 <connections>
-                                    <outletCollection property="gestureRecognizers" destination="3OD-ID-8uA" appends="YES" id="b1N-FK-MHc"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="ASN-6n-ugf"/>
                                 </connections>
-                            </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6xr-4G-XYl">
-                                <rect key="frame" x="327" y="617" width="32" height="30"/>
-                                <state key="normal" title="Next"/>
+                            </scrollView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6xr-4G-XYl">
+                                <rect key="frame" x="329" y="613" width="30" height="34"/>
                                 <connections>
                                     <action selector="nextPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ifF-Ch-1m0"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WTZ-2Q-T4v">
-                                <rect key="frame" x="16" y="617" width="59" height="30"/>
-                                <state key="normal" title="Previous"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WTZ-2Q-T4v">
+                                <rect key="frame" x="16" y="613" width="30" height="34"/>
                                 <connections>
                                     <action selector="previousPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6qP-MC-33V"/>
                                 </connections>
@@ -43,14 +66,14 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="diR-ym-RKq" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="1oB-xz-T8L"/>
+                            <constraint firstItem="ILs-Yc-nD6" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-36" id="2A3-XK-hka"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="WTZ-2Q-T4v" secondAttribute="bottom" constant="20" id="9W3-zU-Dl9"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="diR-ym-RKq" secondAttribute="trailing" id="EmA-ct-KWf"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="diR-ym-RKq" secondAttribute="bottom" constant="70" id="Gn3-f6-0av"/>
                             <constraint firstItem="WTZ-2Q-T4v" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="TpQ-df-SuN"/>
+                            <constraint firstItem="ILs-Yc-nD6" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Tqq-Am-jzv"/>
+                            <constraint firstItem="ILs-Yc-nD6" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="Uw0-X3-0Dg"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="6xr-4G-XYl" secondAttribute="trailing" constant="16" id="XLf-yW-BTt"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="6xr-4G-XYl" secondAttribute="bottom" constant="20" id="bpm-TD-0CB"/>
-                            <constraint firstItem="diR-ym-RKq" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="iCC-1w-NJN"/>
+                            <constraint firstItem="ILs-Yc-nD6" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="yic-0I-f3k"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -58,6 +81,8 @@
                         <outlet property="comicImage" destination="diR-ym-RKq" id="hyx-0k-S9Q"/>
                         <outlet property="nextButton" destination="6xr-4G-XYl" id="DEn-5B-dkK"/>
                         <outlet property="previousButton" destination="WTZ-2Q-T4v" id="q2y-cz-CrW"/>
+                        <outlet property="scrollView" destination="ILs-Yc-nD6" id="rmP-hk-zHc"/>
+                        <outlet property="titleLabel" destination="apG-0y-XAx" id="v0K-2e-Mpm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
