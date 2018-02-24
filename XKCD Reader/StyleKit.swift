@@ -26,6 +26,10 @@ public class StyleKit : NSObject {
         static var infoButtonTargets: [AnyObject]?
         static var imageOfInfoBackground: UIImage?
         static var infoBackgroundTargets: [AnyObject]?
+        static var imageOfCloseInfoButton: UIImage?
+        static var closeInfoButtonTargets: [AnyObject]?
+        static var imageOfIconImage: UIImage?
+        static var iconImageTargets: [AnyObject]?
     }
 
     //// Drawing Methods
@@ -327,6 +331,115 @@ public class StyleKit : NSObject {
 
     }
 
+    @objc dynamic public class func drawCloseInfoButton(frame targetFrame: CGRect = CGRect(x: 0, y: 0, width: 32, height: 32), resizing: ResizingBehavior = .aspectFit) {
+        //// General Declarations
+        let context = UIGraphicsGetCurrentContext()!
+        
+        //// Resize to Target Frame
+        context.saveGState()
+        let resizedFrame: CGRect = resizing.apply(rect: CGRect(x: 0, y: 0, width: 32, height: 32), target: targetFrame)
+        context.translateBy(x: resizedFrame.minX, y: resizedFrame.minY)
+        context.scaleBy(x: resizedFrame.width / 32, y: resizedFrame.height / 32)
+        let resizedShadowScale: CGFloat = min(resizedFrame.width / 32, resizedFrame.height / 32)
+
+
+
+        //// Shadow Declarations
+        let shadow = NSShadow()
+        shadow.shadowColor = UIColor.lightGray.withAlphaComponent(0.6)
+        shadow.shadowOffset = CGSize(width: 3, height: 3)
+        shadow.shadowBlurRadius = 5
+
+        //// Group
+        context.saveGState()
+        context.setShadow(offset: CGSize(width: shadow.shadowOffset.width * resizedShadowScale, height: shadow.shadowOffset.height * resizedShadowScale), blur: shadow.shadowBlurRadius * resizedShadowScale, color: (shadow.shadowColor as! UIColor).cgColor)
+        context.beginTransparencyLayer(auxiliaryInfo: nil)
+
+
+        //// Text Drawing
+        let textRect = CGRect(x: 9, y: 7, width: 15, height: 18)
+        let textTextContent = "X"
+        let textStyle = NSMutableParagraphStyle()
+        textStyle.alignment = .center
+        let textFontAttributes = [
+            .font: UIFont.systemFont(ofSize: 20),
+            .foregroundColor: UIColor.red,
+            .paragraphStyle: textStyle,
+        ] as [NSAttributedStringKey: Any]
+
+        let textTextHeight: CGFloat = textTextContent.boundingRect(with: CGSize(width: textRect.width, height: CGFloat.infinity), options: .usesLineFragmentOrigin, attributes: textFontAttributes, context: nil).height
+        context.saveGState()
+        context.clip(to: textRect)
+        textTextContent.draw(in: CGRect(x: textRect.minX, y: textRect.minY + (textRect.height - textTextHeight) / 2, width: textRect.width, height: textTextHeight), withAttributes: textFontAttributes)
+        context.restoreGState()
+
+
+        context.endTransparencyLayer()
+        context.restoreGState()
+        
+        context.restoreGState()
+
+    }
+
+    @objc dynamic public class func drawIconImage(frame targetFrame: CGRect = CGRect(x: 0, y: 0, width: 1024, height: 1024), resizing: ResizingBehavior = .aspectFit) {
+        //// General Declarations
+        let context = UIGraphicsGetCurrentContext()!
+        
+        //// Resize to Target Frame
+        context.saveGState()
+        let resizedFrame: CGRect = resizing.apply(rect: CGRect(x: 0, y: 0, width: 1024, height: 1024), target: targetFrame)
+        context.translateBy(x: resizedFrame.minX, y: resizedFrame.minY)
+        context.scaleBy(x: resizedFrame.width / 1024, y: resizedFrame.height / 1024)
+
+
+        //// Color Declarations
+        let color3 = UIColor(red: 0.586, green: 0.656, blue: 0.789, alpha: 1.000)
+
+        //// Rectangle Drawing
+        let rectanglePath = UIBezierPath(rect: CGRect(x: 0, y: 0, width: 1024, height: 1024))
+        color3.setFill()
+        rectanglePath.fill()
+
+
+        //// Text Drawing
+        let textRect = CGRect(x: 64, y: 212, width: 896, height: 300)
+        let textTextContent = "xkcd"
+        let textStyle = NSMutableParagraphStyle()
+        textStyle.alignment = .left
+        let textFontAttributes = [
+            .font: UIFont.systemFont(ofSize: 280),
+            .foregroundColor: UIColor.black,
+            .paragraphStyle: textStyle,
+        ] as [NSAttributedStringKey: Any]
+
+        let textTextHeight: CGFloat = textTextContent.boundingRect(with: CGSize(width: textRect.width, height: CGFloat.infinity), options: .usesLineFragmentOrigin, attributes: textFontAttributes, context: nil).height
+        context.saveGState()
+        context.clip(to: textRect)
+        textTextContent.draw(in: CGRect(x: textRect.minX, y: textRect.minY + (textRect.height - textTextHeight) / 2, width: textRect.width, height: textTextHeight), withAttributes: textFontAttributes)
+        context.restoreGState()
+
+
+        //// Text 2 Drawing
+        let text2Rect = CGRect(x: 64, y: 512, width: 896, height: 300)
+        let text2TextContent = "reader"
+        let text2Style = NSMutableParagraphStyle()
+        text2Style.alignment = .left
+        let text2FontAttributes = [
+            .font: UIFont.italicSystemFont(ofSize: 280),
+            .foregroundColor: UIColor.black,
+            .paragraphStyle: text2Style,
+        ] as [NSAttributedStringKey: Any]
+
+        let text2TextHeight: CGFloat = text2TextContent.boundingRect(with: CGSize(width: text2Rect.width, height: CGFloat.infinity), options: .usesLineFragmentOrigin, attributes: text2FontAttributes, context: nil).height
+        context.saveGState()
+        context.clip(to: text2Rect)
+        text2TextContent.draw(in: CGRect(x: text2Rect.minX, y: text2Rect.minY + (text2Rect.height - text2TextHeight) / 2, width: text2Rect.width, height: text2TextHeight), withAttributes: text2FontAttributes)
+        context.restoreGState()
+        
+        context.restoreGState()
+
+    }
+
     //// Generated Images
 
     @objc dynamic public class var imageOfNextButton: UIImage {
@@ -395,6 +508,34 @@ public class StyleKit : NSObject {
         return Cache.imageOfInfoBackground!
     }
 
+    @objc dynamic public class var imageOfCloseInfoButton: UIImage {
+        if Cache.imageOfCloseInfoButton != nil {
+            return Cache.imageOfCloseInfoButton!
+        }
+
+        UIGraphicsBeginImageContextWithOptions(CGSize(width: 32, height: 32), false, 0)
+            StyleKit.drawCloseInfoButton()
+
+        Cache.imageOfCloseInfoButton = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+
+        return Cache.imageOfCloseInfoButton!
+    }
+
+    @objc dynamic public class var imageOfIconImage: UIImage {
+        if Cache.imageOfIconImage != nil {
+            return Cache.imageOfIconImage!
+        }
+
+        UIGraphicsBeginImageContextWithOptions(CGSize(width: 1024, height: 1024), false, 0)
+            StyleKit.drawIconImage()
+
+        Cache.imageOfIconImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+
+        return Cache.imageOfIconImage!
+    }
+
     //// Customization Infrastructure
 
     @objc @IBOutlet dynamic var nextButtonTargets: [AnyObject]! {
@@ -433,6 +574,26 @@ public class StyleKit : NSObject {
             Cache.infoBackgroundTargets = newValue
             for target: AnyObject in newValue {
                 let _ = target.perform(NSSelectorFromString("setImage:"), with: StyleKit.imageOfInfoBackground)
+            }
+        }
+    }
+
+    @objc @IBOutlet dynamic var closeInfoButtonTargets: [AnyObject]! {
+        get { return Cache.closeInfoButtonTargets }
+        set {
+            Cache.closeInfoButtonTargets = newValue
+            for target: AnyObject in newValue {
+                let _ = target.perform(NSSelectorFromString("setImage:"), with: StyleKit.imageOfCloseInfoButton)
+            }
+        }
+    }
+
+    @objc @IBOutlet dynamic var iconImageTargets: [AnyObject]! {
+        get { return Cache.iconImageTargets }
+        set {
+            Cache.iconImageTargets = newValue
+            for target: AnyObject in newValue {
+                let _ = target.perform(NSSelectorFromString("setImage:"), with: StyleKit.imageOfIconImage)
             }
         }
     }
