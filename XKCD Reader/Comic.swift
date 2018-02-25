@@ -41,10 +41,11 @@ struct Comic: Codable {
                 print("Could not get comic number from JSON")
                 return nil
             }
-            guard let alt = json["alt"] as? String else {
+            guard let alt = String(utf8String: json["alt"] as! UnsafePointer<CChar>) else {
                 print("Could not get comic alt from JSON")
                 return nil
             }
+            print(alt)
             guard let img = json["img"] as? String else {
                 print("Could not get comic img from JSON")
                 return nil
