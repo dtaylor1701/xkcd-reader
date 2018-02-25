@@ -56,8 +56,17 @@ struct Comic: Codable {
             return nil
         }
     }
-    static func URLString(num: Int) -> String{
+    static func URLString(num: Int) -> String {
         return "https://xkcd.com/\(num)/info.0.json"
+    }
+    
+    static func ComicURL(num: Int) -> URL? {
+        
+        let urlString = "https://xkcd.com/\(num)"
+        if let url = URL(string: urlString){
+            return url
+        }
+        return nil
     }
 }
 

@@ -28,6 +28,8 @@ public class StyleKit : NSObject {
         static var infoBackgroundTargets: [AnyObject]?
         static var imageOfCloseInfoButton: UIImage?
         static var closeInfoButtonTargets: [AnyObject]?
+        static var imageOfIconImage: UIImage?
+        static var iconImageTargets: [AnyObject]?
     }
 
     //// Drawing Methods
@@ -310,6 +312,7 @@ public class StyleKit : NSObject {
 
         //// Color Declarations
         let color2 = UIColor(red: 0.557, green: 0.557, blue: 0.557, alpha: 0.502)
+        let color4 = color2.withAlphaComponent(0.9)
 
         //// Shadow Declarations
         let shadow = NSShadow()
@@ -321,7 +324,7 @@ public class StyleKit : NSObject {
         let rectanglePath = UIBezierPath(roundedRect: CGRect(x: 5, y: 5, width: 200, height: 120), cornerRadius: 5)
         context.saveGState()
         context.setShadow(offset: CGSize(width: shadow.shadowOffset.width * resizedShadowScale, height: shadow.shadowOffset.height * resizedShadowScale), blur: shadow.shadowBlurRadius * resizedShadowScale, color: (shadow.shadowColor as! UIColor).cgColor)
-        color2.setFill()
+        color4.setFill()
         rectanglePath.fill()
         context.restoreGState()
         
@@ -373,6 +376,65 @@ public class StyleKit : NSObject {
 
 
         context.endTransparencyLayer()
+        context.restoreGState()
+        
+        context.restoreGState()
+
+    }
+
+    @objc dynamic public class func drawIconImage(frame targetFrame: CGRect = CGRect(x: 0, y: 0, width: 1024, height: 1024), resizing: ResizingBehavior = .aspectFit) {
+        //// General Declarations
+        let context = UIGraphicsGetCurrentContext()!
+        
+        //// Resize to Target Frame
+        context.saveGState()
+        let resizedFrame: CGRect = resizing.apply(rect: CGRect(x: 0, y: 0, width: 1024, height: 1024), target: targetFrame)
+        context.translateBy(x: resizedFrame.minX, y: resizedFrame.minY)
+        context.scaleBy(x: resizedFrame.width / 1024, y: resizedFrame.height / 1024)
+
+
+        //// Color Declarations
+        let color3 = UIColor(red: 0.586, green: 0.656, blue: 0.789, alpha: 1.000)
+
+        //// Rectangle Drawing
+        let rectanglePath = UIBezierPath(rect: CGRect(x: 0, y: 0, width: 1024, height: 1024))
+        color3.setFill()
+        rectanglePath.fill()
+
+
+        //// Text Drawing
+        let textRect = CGRect(x: 64, y: 212, width: 896, height: 300)
+        let textTextContent = "xkcd"
+        let textStyle = NSMutableParagraphStyle()
+        textStyle.alignment = .left
+        let textFontAttributes = [
+            .font: UIFont.systemFont(ofSize: 280),
+            .foregroundColor: UIColor.black,
+            .paragraphStyle: textStyle,
+        ] as [NSAttributedStringKey: Any]
+
+        let textTextHeight: CGFloat = textTextContent.boundingRect(with: CGSize(width: textRect.width, height: CGFloat.infinity), options: .usesLineFragmentOrigin, attributes: textFontAttributes, context: nil).height
+        context.saveGState()
+        context.clip(to: textRect)
+        textTextContent.draw(in: CGRect(x: textRect.minX, y: textRect.minY + (textRect.height - textTextHeight) / 2, width: textRect.width, height: textTextHeight), withAttributes: textFontAttributes)
+        context.restoreGState()
+
+
+        //// Text 2 Drawing
+        let text2Rect = CGRect(x: 64, y: 512, width: 896, height: 300)
+        let text2TextContent = "reader"
+        let text2Style = NSMutableParagraphStyle()
+        text2Style.alignment = .left
+        let text2FontAttributes = [
+            .font: UIFont.italicSystemFont(ofSize: 280),
+            .foregroundColor: UIColor.black,
+            .paragraphStyle: text2Style,
+        ] as [NSAttributedStringKey: Any]
+
+        let text2TextHeight: CGFloat = text2TextContent.boundingRect(with: CGSize(width: text2Rect.width, height: CGFloat.infinity), options: .usesLineFragmentOrigin, attributes: text2FontAttributes, context: nil).height
+        context.saveGState()
+        context.clip(to: text2Rect)
+        text2TextContent.draw(in: CGRect(x: text2Rect.minX, y: text2Rect.minY + (text2Rect.height - text2TextHeight) / 2, width: text2Rect.width, height: text2TextHeight), withAttributes: text2FontAttributes)
         context.restoreGState()
         
         context.restoreGState()
@@ -441,7 +503,7 @@ public class StyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 210, height: 130), false, 0)
             StyleKit.drawInfoBackground()
 
-        Cache.imageOfInfoBackground = UIGraphicsGetImageFromCurrentImageContext()!
+        Cache.imageOfInfoBackground = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10), resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return Cache.imageOfInfoBackground!
@@ -459,6 +521,20 @@ public class StyleKit : NSObject {
         UIGraphicsEndImageContext()
 
         return Cache.imageOfCloseInfoButton!
+    }
+
+    @objc dynamic public class var imageOfIconImage: UIImage {
+        if Cache.imageOfIconImage != nil {
+            return Cache.imageOfIconImage!
+        }
+
+        UIGraphicsBeginImageContextWithOptions(CGSize(width: 1024, height: 1024), false, 0)
+            StyleKit.drawIconImage()
+
+        Cache.imageOfIconImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+
+        return Cache.imageOfIconImage!
     }
 
     //// Customization Infrastructure
@@ -509,6 +585,16 @@ public class StyleKit : NSObject {
             Cache.closeInfoButtonTargets = newValue
             for target: AnyObject in newValue {
                 let _ = target.perform(NSSelectorFromString("setImage:"), with: StyleKit.imageOfCloseInfoButton)
+            }
+        }
+    }
+
+    @objc @IBOutlet dynamic var iconImageTargets: [AnyObject]! {
+        get { return Cache.iconImageTargets }
+        set {
+            Cache.iconImageTargets = newValue
+            for target: AnyObject in newValue {
+                let _ = target.perform(NSSelectorFromString("setImage:"), with: StyleKit.imageOfIconImage)
             }
         }
     }

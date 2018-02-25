@@ -16,10 +16,10 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var previousButton: UIButton!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var infoView: UIView!
-    @IBOutlet weak var numLabel: UILabel!
     @IBOutlet weak var infoButton: UIButton!
     @IBOutlet weak var infoBackground: UIImageView!
     @IBOutlet weak var closeInfoButton: UIButton!
+    @IBOutlet weak var linkButton: UIButton!
     
     @IBAction func infoPressed(_ sender: Any) {
         infoView.isHidden = false
@@ -62,6 +62,12 @@ class ViewController: UIViewController, UIScrollViewDelegate {
             self.present(alertController, animated: true, completion: nil)
         }
     }
+    @IBAction func linkPressed(_ sender: Any) {
+        if let comic = currentComic, let url = Comic.ComicURL(num: comic.num) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
+        
+    }
     
     var currentComic: Comic?
     var maxNum = 0
@@ -76,8 +82,8 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         previousButton.setImage(StyleKit.imageOfPreviousButton, for: .normal)
         infoButton.setImage(StyleKit.imageOfInfoButton, for: .normal)
         previousButton.isHidden = true;
-        titleLabel.text = "XKCD"
-        numLabel.text = "0"
+        titleLabel.text = "xkcd"
+        linkButton.setTitle("0", for: .normal)
         infoView.isHidden = true
         infoBackground.image = StyleKit.imageOfInfoBackground
         closeInfoButton.setImage(StyleKit.imageOfCloseInfoButton, for: .normal)
@@ -98,7 +104,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         if let loadedComic = currentComic {
             DispatchQueue.main.async {
                 self.titleLabel.text = loadedComic.title
-                self.numLabel.text = "xkcd number \(loadedComic.num)"
+                self.linkButton.setTitle("xkcd number \(loadedComic.num)", for: .normal)
             }
             getComicImage(comic: loadedComic)
         }
