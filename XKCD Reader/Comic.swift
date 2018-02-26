@@ -25,32 +25,12 @@ struct Comic: Codable {
     
     static func ComicFromJSON(data: Data) -> Comic? {
         do {
-            guard let json = try JSONSerialization.jsonObject(with: data, options: [])
-                as? [String: Any] else {
-                    print("error trying to convert data to JSON")
-                    return nil
+            let decoder = JSONDecoder()
+            var comicData = try decoder.decode(Comic.self, from: data)
+            if let str = String(data: comicData.alt.data(using: .isoLatin1)!, encoding: .utf8) {
+                comicData = Comic(num: comicData.num, title: comicData.title, img: comicData.img, alt: str)
             }
-            
-            print("Comic: " + json.description)
-            
-            guard let title = json["title"] as? String else {
-                print("Could not get comic title from JSON")
-                return nil
-            }
-            guard let num = json["num"] as? Int else {
-                print("Could not get comic number from JSON")
-                return nil
-            }
-            guard let alt = json["alt"] as? String else {
-                print("Could not get comic alt from JSON")
-                return nil
-            }
-            guard let img = json["img"] as? String else {
-                print("Could not get comic img from JSON")
-                return nil
-            }
-            
-            return Comic(num: num, title: title, img: img, alt: alt)
+            return comicData
         } catch  {
             print("error trying to convert data to JSON")
             return nil
