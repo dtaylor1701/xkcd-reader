@@ -49,7 +49,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="343" height="120"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="apG-0y-XAx">
-                                        <rect key="frame" x="140" y="44" width="62" height="32"/>
+                                        <rect key="frame" x="5" y="44" width="333" height="32"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -71,6 +71,7 @@
                                 <constraints>
                                     <constraint firstItem="jxH-7r-OHU" firstAttribute="top" secondItem="Rx7-wA-sbR" secondAttribute="top" id="3YC-XB-eMS"/>
                                     <constraint firstAttribute="bottom" secondItem="FXI-pa-1q3" secondAttribute="bottom" constant="8" id="AlB-Me-LT2"/>
+                                    <constraint firstItem="apG-0y-XAx" firstAttribute="leading" secondItem="Rx7-wA-sbR" secondAttribute="leading" constant="5" id="CAv-wT-nDb"/>
                                     <constraint firstItem="RE5-cY-0Nf" firstAttribute="top" secondItem="Rx7-wA-sbR" secondAttribute="top" constant="8" id="FLm-av-Vrj"/>
                                     <constraint firstAttribute="bottom" secondItem="jxH-7r-OHU" secondAttribute="bottom" id="FjN-7u-Eb9"/>
                                     <constraint firstItem="jxH-7r-OHU" firstAttribute="leading" secondItem="Rx7-wA-sbR" secondAttribute="leading" id="LUF-Bv-AXt"/>
@@ -79,6 +80,7 @@
                                     <constraint firstItem="FXI-pa-1q3" firstAttribute="centerX" secondItem="Rx7-wA-sbR" secondAttribute="centerX" id="Qn1-jG-ZvR"/>
                                     <constraint firstAttribute="height" constant="120" id="XTv-wR-Vi2"/>
                                     <constraint firstItem="apG-0y-XAx" firstAttribute="centerY" secondItem="Rx7-wA-sbR" secondAttribute="centerY" id="fIY-J9-Qbn"/>
+                                    <constraint firstAttribute="trailing" secondItem="apG-0y-XAx" secondAttribute="trailing" constant="5" id="ibG-cG-pfu"/>
                                     <constraint firstItem="apG-0y-XAx" firstAttribute="centerX" secondItem="Rx7-wA-sbR" secondAttribute="centerX" id="n6g-QG-hBd"/>
                                 </constraints>
                             </view>
